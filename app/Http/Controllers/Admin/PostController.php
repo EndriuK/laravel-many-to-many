@@ -151,7 +151,7 @@ class PostController extends Controller
             Storage::disk('public')->delete($post->cover_image);
         }
 
-        $post->tags()->sync([]);
+        // $post->tags()->sync([]);
 
         $post->delete();
         return redirect()->route('admin.posts.index')->with('message', 'Post eliminato correttamente');
