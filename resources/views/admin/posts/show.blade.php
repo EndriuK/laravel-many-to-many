@@ -12,6 +12,13 @@
                     <img class="cover_image" src="{{ asset('./storage/'.$post->cover_image)}}" alt="{{ $post->title }}">
                 @endif
                 <p>{{ $post->slug }}</p>
+                <p>
+                    @forelse ($post->tags as $tag )
+                        {{ $tag->name}}
+                    @empty
+                        Il Post non ha tag assegnati
+                    @endforelse
+                </p>
                 <p>{{ $post->content }}</p>
             </div>
         </div>
