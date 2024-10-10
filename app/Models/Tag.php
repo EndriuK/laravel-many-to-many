@@ -10,8 +10,15 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'slug'];
+
     public static function generateSlug($title)
     {
         return Str::slug($title, '-');
+    }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }
