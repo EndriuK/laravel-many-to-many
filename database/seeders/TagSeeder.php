@@ -15,7 +15,7 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = ['HRML', 'CSS', 'Javascript', 'Vuejs', 'PHP', 'MySQL', 'Laravel', 'Symfony', 'ReactJS', 'NodeJS', 'UI/UX Design'];
+        $tags = ['HTML', 'CSS', 'Javascript', 'Vuejs', 'PHP', 'MySQL', 'Laravel', 'Symfony', 'ReactJS', 'NodeJS', 'UI/UX Design'];
 
         foreach ($tags as $tag) {
             $new_tag = new Tag();
