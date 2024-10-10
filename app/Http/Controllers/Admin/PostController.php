@@ -64,6 +64,12 @@ class PostController extends Controller
         $post = new Post();
         $post->fill($form_data);
         $post->save();
+
+        if ($request->has('tags')) {
+            $tags = $request->tags;
+            $post->tags()->attach($tags);
+        }
+
         return redirect()->route('admin.posts.index')->with('message', 'Post creato correttamente');
     }
 

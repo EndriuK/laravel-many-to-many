@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="container-fluid">
-        @if (session('message'))
-            <div class="aler alert-success mt-3">
-                {{ session('message') }}
-            </div>
-        @endif
         <div class="row">
             <div class="col-12">
+                @if (session('message'))
+                    <div class="aler alert-success mt-3">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div class="d-flex my-3 align-items-center justisfy-content-between">
                     <h2>Elenco posts</h2>
                     <a href="{{ route('admin.posts.create') }}" class="btn btn-sm btn-primary ms-auto">Aggiungi post</a>
