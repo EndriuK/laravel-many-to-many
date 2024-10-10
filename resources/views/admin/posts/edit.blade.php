@@ -53,6 +53,22 @@
                             @enderror
                         </div>
                         <div class="col-12">
+                            <label for="" class="control-label">Seleziona tag</label>
+                            <div>
+                                @foreach ($tags as $tag)
+                                    <div class="form-check-inline">
+                                        @if ($errors->any())
+                                        <input type="checkbox" name="tags[]" id="" class="form-check-input" value="{{ $tag->id}}" {{ in_array($tag->id, old('tags')) ? 'checked' : ''}}>
+                                        @else
+                                            <input type="checkbox" name="tags[]" id="" class="form-check-input" value="{{ $tag->id}}" @checked($post->tags->contains($tag->id ? 'checked' : ''))>
+                                        @endif
+                                        {{-- <input type="checkbox" name="tags[]" id="" class="form-check-input" value="{{$tag->id}}" @checked(is_array(old('tags') && in_array($tag->id, old('tags '))))> --}}
+                                        <label class="form-check-label" for="">{{$tag->name}}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <label for="content" class="control-label">Contenuto</label>
                             <textarea name="content" id="content-post" class="form-control form-control-sm" rows="10" cols="30">{{ old('content', $post->content) }}</textarea>
                         </div>  

@@ -93,7 +93,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+
+        $tags = Tag::all();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -106,8 +109,31 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         $form_data = $request->validated();
+
+        // Verifica se request abbia il file cover_image
+        if ($request->hasFile('cover_image')) {
+
+            // Verifico se il post, ha già un'imaggne di copertina
+            if (Str::startsWith($post->cover_image, 'https') === false) {
+                Storage::disk('public')->delete($post->cover_image);
+            }
+
+            // Effetua l'upload del file e salvo il path dell'immagine in una variabile
+            $path = Storage::disk('public')->put('cover_images', $form_data['cover_image']);
+
+            // Assegno il valore contenuto nella variavile alla chiave 'cover_image' di 'form_data'
+            $form_data['cover_image'] = $path;
+        }
+
         $form_data['slug'] = Post::generateSlug($form_data['title']);
+
         $post->update($form_data);
+
+        if ($request->has('tags')) {
+            $post->tags()->sync($request->tags);
+        } else {
+            $post->tags()->sync([]);
+        }
 
         return redirect()->route('admin.posts.index')->with('message', 'Post modificato correttamente');
     }
@@ -120,6 +146,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        if (Str::startsWith($post->cover_image, 'https') === false) {
+            Storage::disk('public')->delete($post->cover_image);
+        }
+
+        $post->tags()->sync([]);
+
         $post->delete();
         return redirect()->route('admin.posts.index')->with('message', 'Post eliminato correttamente');
     }
