@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable()->after('id');
 
             // Aggiungo la foreign key
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
